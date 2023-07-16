@@ -11,9 +11,8 @@ export default function TabsMovie() {
   // /api/QuanLyRap/LayThongTinLichChieuHeThongRap?maNhom=GP01
   useEffect(() => {
     https
-      .get("/api/QuanLyRap/LayThongTinLichChieuHeThongRap?maNhom=GP01")
+      .get("/api/QuanLyRap/LayThongTinLichChieuHeThongRap?maNhom=GP08")
       .then((res) => {
-        console.log("res: ", res);
         setHeThongRap(res.data.content);
       })
       .catch((err) => {
@@ -22,7 +21,7 @@ export default function TabsMovie() {
   }, []);
 
   let renderDsPhim = (danhSachPhim) => {
-    return danhSachPhim.slice(0, 8).map((phim) => {
+    return danhSachPhim.map((phim) => {
       return (
         <div key={phim.maPhim} className="p-5 grid grid-cols-5 gap-3">
           <img
@@ -32,7 +31,7 @@ export default function TabsMovie() {
           />
           <div className="col-span-4">
             <div className="grid grid-cols-4 w-full gap-3">
-              {phim.lstLichChieuTheoPhim.map((lichChieu) => {
+              {phim.lstLichChieuTheoPhim.slice(0, 8).map((lichChieu) => {
                 //moment js
                 return (
                   <div
@@ -54,7 +53,6 @@ export default function TabsMovie() {
 
   let renderHeThongRap = () => {
     return heThongRap.map((heThong, index) => {
-      console.log(heThong);
       return {
         key: index,
         label: <img className="w-10" src={heThong.logo} alt="" />,
@@ -63,8 +61,6 @@ export default function TabsMovie() {
             tabPosition="left"
             defaultActiveKey="1"
             items={heThong.lstCumRap.map((cumRap, index) => {
-              console.log("cumRap: ", cumRap);
-
               return {
                 key: index,
                 label: (
